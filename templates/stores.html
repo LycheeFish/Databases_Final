@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #007BFF;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .recommendations, .filtered-stores {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .recommendations ul, .filtered-stores ul {
+            list-style: none;
+            padding: 0;
+        }
+        .recommendations li, .filtered-stores li {
+            background-color: #e9ffe9;
+            padding: 10px;
+            margin: 5px auto;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Store List</h1>
+
+    <div class="button-container">
+        <a href="{{ url_for('profile') }}" class="button">Profile</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Store ID</th>
+                <th>Store Name</th>
+                <th>Store Type</th>
+                <th>Location</th>
+                <th>Contact Info</th>
+                <th>Closing Time</th>
+                <th>Reviews</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for store in stores %}
+            <tr>
+                <td>{{ store.store_id }}</td>
+                <td><a href="{{ url_for('store_inventory', store_id=store.store_id) }}">{{ store.store_name }}</a></td>
+                <td>{{ store.store_type }}</td>
+                <td>{{ store.location }}</td>
+                <td>{{ store.contact_info }}</td>
+                <td>{{ store.closing_time }}</td>
+                <td>
+                    <a href="{{ url_for('store_reviews', store_id=store.store_id) }}" class="button">View Reviews</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Recommendations Section -->
+    <div class="recommendations">
+        <h2>Recommended Items For You</h2>
+        {% if recommendations %}
+        <ul>
+            {% for item in recommendations %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No recommendations available at this time.</p>
+        {% endif %}
+    </div>
+
+    <!-- Filtered Stores Section -->
+    <div class="filtered-stores">
+        <h2>Stores Containing Recommended Items</h2>
+        {% if stores_with_recommendations %}
+        <ul>
+            {% for store in stores_with_recommendations %}
+            <li>
+                <strong>{{ store.store_name }}</strong> ({{ store.location }}) - 
+                <a href="{{ url_for('store_inventory', store_id=store.store_id) }}">View Inventory</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No stores contain your recommended items.</p>
+        {% endif %}
+    </div>
+
+    <div class="button-container">
+        <a href="{{ url_for('logout') }}" class="button">Logout</a>
+    </div>
+</body>
+</html>

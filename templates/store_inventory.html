@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Inventory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inventory for Store ID: {{ store_id }}</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Inventory ID</th>
+                <th>Food Item</th>
+                <th>Quantity</th>
+                <th>Final Price</th>
+                <th>Available Time</th>
+                <th>Expiry Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.inventory_id }}</td>
+                <td>{{ item.food_item }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.adjusted_price }}</td>
+                <td>{{ item.available_time }}</td>
+                <td>{{ item.expiry_time }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('purchase_item', store_id=store_id) }}">
+                        <input type="hidden" name="inventory_id" value="{{ item.inventory_id }}">
+                        <input type="hidden" name="food_item" value="{{ item.food_item }}">
+                        <input type="hidden" name="adjusted_price" value="{{ item.adjusted_price }}">
+                        <button type="submit">Purchase</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+    <a href="{{ url_for('list_stores') }}">Back to Stores</a>
+</body>
+</html>

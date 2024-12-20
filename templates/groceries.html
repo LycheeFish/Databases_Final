@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groceries List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .item-title {
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Groceries List</h1>
+    <ul>
+        {% for grocery in groceries %}
+        <li>
+            <p class="item-title">{{ grocery.itemDescription }}</p>
+            <p>ID: {{ grocery.id }}</p>
+            <p>Member Number: {{ grocery.Member_number }}</p>
+            <p>Date: {{ grocery.Date }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="button-container">
+        <a href="/hello"><button>Go to Hello World</button></a>
+    </div>
+    <div class="button-container">
+        <a href="/stores"><button>Go to Stores</button></a>
+    </div>
+</body>
+</html>

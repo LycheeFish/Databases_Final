@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        .profile-container {
+            display: inline-block;
+            text-align: left;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: white;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Profile</h1>
+    <div class="profile-container">
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+        <p><strong>Login Date:</strong> {{ user.date }}</p>
+        
+        <h2>Recent Purchases</h2>
+        {% if user.purchases %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Item Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in user.purchases %}
+                <tr>
+                    <td>{{ purchase.Date }}</td>
+                    <td>{{ purchase.itemDescription }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No recent purchases found.</p>
+        {% endif %}
+
+        <a href="{{ url_for('list_stores') }}" class="button">Back to Stores</a>
+        <a href="{{ url_for('post_review') }}" class="button">Post a Review</a>
+
+    </div>
+</body>
+</html>

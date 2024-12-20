@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Reviews</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        .reviews-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .review {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+        .review img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+        .review-text {
+            flex: 1;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button {
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reviews for Store {{ store_id }}</h1>
+    <div class="reviews-container">
+        {% if reviews %}
+            {% for review in reviews %}
+            <div class="review">
+                {% if review.photo %}
+                    <img src="{{ url_for('uploaded_images', filename=review.photo.split('/')[-1]) }}" alt="Review Image">
+                {% endif %}
+
+                <div class="review-text">
+                    <p>{{ review.text }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No reviews available for this store.</p>
+        {% endif %}
+    </div>
+    <div class="button-container">
+        <a href="{{ url_for('list_stores') }}" class="button">Back to Stores</a>
+    </div>
+</body>
+</html>
